@@ -2,8 +2,9 @@
 
 (defn parse-nested-keys
   [param-name]
-  (let [[_ k ks] (re-matches #"(.*?)(\[.*?\]*)" param-name)
-        keys     (map second (re-seq #"\[(.*?)\]" ks))]
+  (let [[_ k ks] (re-matches #"(.*?)((?:\[.*?\])*)" param-name)
+        keys     (if ks (map second (re-seq #"\[(.*?)\]" ks)))]
+    (prn k keys)
     (cons k keys)))
 
 (defn- nest-params
